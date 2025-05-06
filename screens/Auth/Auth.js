@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = "http://192.168.1.11:5000"; // Đổi thành IP LAN nếu test trên thiết bị thật
+const API_BASE_URL =
+  process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000"; // Đổi thành IP LAN nếu test trên thiết bị thật
 
 const Auth = ({ setIsLoggedIn, setRole }) => {
   // ==================== All Hooks
