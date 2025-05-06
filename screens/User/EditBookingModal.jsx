@@ -207,7 +207,11 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
               onPress={() => setShowDatePicker(true)}
               style={styles.input}
             >
-              <Text>{updatedBooking.date || "Chọn ngày"}</Text>
+              <Text>
+                {updatedBooking.date
+                  ? new Date(updatedBooking.date).toLocaleDateString("vi-VN") // Hiển thị dd/mm/yyyy
+                  : "Chọn ngày"}
+              </Text>
             </TouchableOpacity>
 
             {showDatePicker && (
@@ -222,7 +226,7 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
                 onChange={(event, selectedDate) => {
                   setShowDatePicker(false);
                   if (selectedDate) {
-                    const formatted = selectedDate.toISOString().split("T")[0];
+                    const formatted = selectedDate.toISOString().split("T")[0]; // Lưu dạng yyyy-mm-dd
                     handleChange("date", formatted);
                   }
                 }}
