@@ -24,16 +24,11 @@ const BookingHistory = () => {
   const API_BASE_URL =
     process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000"; // Thay thế bằng IP hoặc domain của bạn nếu cần
 
-  const calculateTotalAmount = (selectedDishes) => {
-    if (!selectedDishes || selectedDishes.length === 0) return 0;
-    return selectedDishes.reduce((total, dishItem) => {
-      if (
-        dishItem &&
-        dishItem.dishId &&
-        typeof dishItem.dishId.price === "number" &&
-        typeof dishItem.quantity === "number"
-      ) {
-        return total + dishItem.dishId.price * dishItem.quantity;
+  const calculateTotalAmount = (selectedDishes = []) => {
+    return selectedDishes.reduce((total, { dishId, quantity }) => {
+      const price = Number(dishId?.price);
+      if (!isNaN(price) && typeof quantity === "number") {
+        return total + price * quantity;
       }
       return total;
     }, 0);
