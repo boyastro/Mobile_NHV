@@ -22,7 +22,7 @@ const BookingHistory = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const API_BASE_URL =
-    process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000"; // Thay thế bằng IP hoặc domain của bạn nếu cần
+    process.env.VITE_API_BASE_URL || "https://be-nhahangviet.onrender.com"; // Thay thế bằng IP hoặc domain của bạn nếu cần
 
   const calculateTotalAmount = (selectedDishes = []) => {
     return selectedDishes.reduce((total, { dishId, quantity }) => {

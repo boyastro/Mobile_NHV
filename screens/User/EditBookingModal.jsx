@@ -31,7 +31,7 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
 
   const API_BASE_URL =
-    process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000";
+    process.env.VITE_API_BASE_URL || "https://be-nhahangviet.onrender.com";
 
   // Hàm tính tổng tiền (tương tự như trong BookingHistory)
   const calculateTotalAmount = (selectedDishes) => {

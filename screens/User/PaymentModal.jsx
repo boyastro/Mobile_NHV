@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PaymentModal = ({ booking, onClose, onPaymentSuccess }) => {
   const API_BASE_URL =
-    process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000";
+    process.env.VITE_API_BASE_URL || "https://be-nhahangviet.onrender.com";
 
   const handlePayment = async () => {
     try {

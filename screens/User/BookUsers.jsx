@@ -33,7 +33,7 @@ const BookUser = () => {
   const [showTimePicker, setShowTimePicker] = useState(false);
 
   const API_BASE_URL =
-    process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000";
+    process.env.VITE_API_BASE_URL || "https://be-nhahangviet.onrender.com";
 
   useEffect(() => {
     // Set StatusBar style for the app
