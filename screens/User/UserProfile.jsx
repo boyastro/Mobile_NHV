@@ -71,49 +71,51 @@ const UserProfile = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Tên đăng nhập:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={formData.username}
-              onChangeText={(text) => handleChange("username", text)}
-            />
-          ) : (
-            <Text>{user.username}</Text>
-          )}
-        </View>
-
-        <View style={styles.formGroup}>
-          <Text style={styles.label}>Email:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={formData.email}
-              onChangeText={(text) => handleChange("email", text)}
-            />
-          ) : (
-            <Text>{user.email}</Text>
-          )}
-        </View>
-
-        <View style={styles.buttons}>
-          {isEditing ? (
-            <>
-              <Button title="Lưu" onPress={handleUpdate} color="#28a745" />
-              <Button
-                title="Hủy"
-                onPress={() => setIsEditing(false)}
-                color="#6c757d"
+        <View style={styles.profileCard}>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Tên đăng nhập:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={formData.username}
+                onChangeText={(text) => handleChange("username", text)}
               />
-            </>
-          ) : (
-            <Button
-              title="Chỉnh sửa"
-              onPress={() => setIsEditing(true)}
-              color="#007bff"
-            />
-          )}
+            ) : (
+              <Text style={styles.textValue}>{user.username}</Text>
+            )}
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Email:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={formData.email}
+                onChangeText={(text) => handleChange("email", text)}
+              />
+            ) : (
+              <Text style={styles.textValue}>{user.email}</Text>
+            )}
+          </View>
+
+          <View style={styles.buttons}>
+            {isEditing ? (
+              <>
+                <Button title="Lưu" onPress={handleUpdate} color="#28a745" />
+                <Button
+                  title="Hủy"
+                  onPress={() => setIsEditing(false)}
+                  color="#6c757d"
+                />
+              </>
+            ) : (
+              <Button
+                title="Chỉnh sửa"
+                onPress={() => setIsEditing(true)}
+                color="#007bff"
+              />
+            )}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -123,11 +125,25 @@ const UserProfile = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8f9fa", // Màu nền sáng
   },
   container: {
-    padding: 20,
     flexGrow: 1,
+    justifyContent: "center", // Căn giữa theo chiều dọc
+    alignItems: "center", // Căn giữa theo chiều ngang
+    padding: 20,
+  },
+  profileCard: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    width: "100%",
+    maxWidth: 400, // Giới hạn độ rộng của card
+    elevation: 5, // Để có bóng nhẹ cho card (Android)
+    shadowColor: "#000", // Bóng đổ cho iOS
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   formGroup: {
     marginBottom: 20,
@@ -136,6 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#333",
+    marginBottom: 8,
   },
   input: {
     borderColor: "#ccc",
@@ -144,8 +161,18 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     marginTop: 5,
+    backgroundColor: "#f9f9f9", // Màu nền input
+  },
+  textValue: {
+    fontSize: 16,
+    color: "#555",
+    padding: 10,
+    backgroundColor: "#f9f9f9", // Màu nền cho text khi không chỉnh sửa
+    borderRadius: 4,
   },
   buttons: {
+    flexDirection: "row",
+    justifyContent: "space-between", // Giữa các button
     marginTop: 20,
   },
 });
