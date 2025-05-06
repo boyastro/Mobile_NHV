@@ -563,7 +563,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   closeButton: {
-    backgroundColor: "#6c757d", // Màu xám đậm hơn
+    backgroundColor: "#ff0000", // Màu xám đậm hơn
   },
   saveButton: {
     backgroundColor: "#28a745", // Màu xanh lá đậm hơn
