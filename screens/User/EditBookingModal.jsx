@@ -381,21 +381,21 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
                 scrollEnabled={false} // FlatList này không cần cuộn riêng
               />
             )}
-            <View style={styles.buttons}>
-              <TouchableOpacity
-                onPress={onClose}
-                style={[styles.buttonBase, styles.closeButton]}
-              >
-                <Text style={styles.buttonText}>Đóng</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleSave}
-                style={[styles.buttonBase, styles.saveButton]}
-              >
-                <Text style={styles.buttonText}>Lưu thay đổi</Text>
-              </TouchableOpacity>
-            </View>
           </ScrollView>
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              onPress={onClose}
+              style={[styles.buttonBase, styles.closeButton]}
+            >
+              <Text style={styles.buttonText}>Đóng</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleSave}
+              style={[styles.buttonBase, styles.saveButton]}
+            >
+              <Text style={styles.buttonText}>Lưu thay đổi</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
