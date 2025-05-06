@@ -13,7 +13,7 @@ import {
   Alert, // Thêm Alert để thông báo lỗi
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 const EditBookingModal = ({ booking, onClose, onSave }) => {
   const [updatedBooking, setUpdatedBooking] = useState({
     ...booking,
@@ -27,6 +27,8 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
 
   const [menuList, setMenuList] = useState([]);
   const [currentTotalAmount, setCurrentTotalAmount] = useState(0);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const API_BASE_URL =
     process.env.VITE_API_BASE_URL || "http://192.168.1.11:5000";
@@ -34,14 +36,25 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
   // Hàm tính tổng tiền (tương tự như trong BookingHistory)
   const calculateTotalAmount = (selectedDishes) => {
     if (!selectedDishes || selectedDishes.length === 0) return 0;
+
     return selectedDishes.reduce((total, dishItem) => {
+      // Lấy giá từ dishId hoặc trực tiếp từ dishItem
+      const price =
+        dishItem.dishId && typeof dishItem.dishId === "object"
+          ? dishItem.dishId.price
+          : dishItem.price;
+
+      // Chuyển price từ chuỗi sang số (nếu là chuỗi)
+      const priceNumber = typeof price === "string" ? parseFloat(price) : price;
+
+      // Kiểm tra price và quantity có phải là số hợp lệ không
       if (
-        dishItem &&
-        dishItem.dishId &&
-        typeof dishItem.dishId.price === "number" &&
-        typeof dishItem.quantity === "number"
+        typeof priceNumber === "number" &&
+        !isNaN(priceNumber) &&
+        typeof dishItem.quantity === "number" &&
+        !isNaN(dishItem.quantity)
       ) {
-        return total + dishItem.dishId.price * dishItem.quantity;
+        return total + priceNumber * dishItem.quantity;
       }
       return total;
     }, 0);
@@ -189,21 +202,67 @@ const EditBookingModal = ({ booking, onClose, onSave }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.title}>Chỉnh sửa Đặt Bàn</Text>
 
-            <Text style={styles.label}>Ngày (YYYY-MM-DD)</Text>
-            <TextInput
+            <Text style={styles.label}>Ngày</Text>
+            <TouchableOpacity
+              onPress={() => setShowDatePicker(true)}
               style={styles.input}
-              value={updatedBooking.date}
-              onChangeText={(text) => handleChange("date", text)}
-              placeholder="Ví dụ: 2024-12-31"
-            />
+            >
+              <Text>{updatedBooking.date || "Chọn ngày"}</Text>
+            </TouchableOpacity>
 
-            <Text style={styles.label}>Thời gian (HH:MM)</Text>
-            <TextInput
+            {showDatePicker && (
+              <DateTimePicker
+                value={
+                  updatedBooking.date
+                    ? new Date(updatedBooking.date)
+                    : new Date()
+                }
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowDatePicker(false);
+                  if (selectedDate) {
+                    const formatted = selectedDate.toISOString().split("T")[0];
+                    handleChange("date", formatted);
+                  }
+                }}
+              />
+            )}
+
+            <Text style={styles.label}>Thời gian</Text>
+            <TouchableOpacity
+              onPress={() => setShowTimePicker(true)}
               style={styles.input}
-              value={updatedBooking.time}
-              onChangeText={(text) => handleChange("time", text)}
-              placeholder="Ví dụ: 19:30"
-            />
+            >
+              <Text>{updatedBooking.time || "Chọn giờ"}</Text>
+            </TouchableOpacity>
+
+            {showTimePicker && (
+              <DateTimePicker
+                value={
+                  updatedBooking.time
+                    ? new Date(`2000-01-01T${updatedBooking.time}`)
+                    : new Date()
+                }
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={(event, selectedTime) => {
+                  setShowTimePicker(false);
+                  if (selectedTime) {
+                    const hours = selectedTime
+                      .getHours()
+                      .toString()
+                      .padStart(2, "0");
+                    const minutes = selectedTime
+                      .getMinutes()
+                      .toString()
+                      .padStart(2, "0");
+                    handleChange("time", `${hours}:${minutes}`);
+                  }
+                }}
+              />
+            )}
 
             <Text style={styles.label}>Số người</Text>
             <TextInput
