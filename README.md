@@ -6,12 +6,15 @@
 
 Trước khi chạy dự án, cần cài đặt các gói phụ thuộc:
 
-````bash
+```bash
 npm install
+```
+
+## Chạy ứng dụng bằng điện thoại
 
 ```bash
 npm start
 
-````
+```
 
 Quét mã QR code và chạy trên điện thoại
